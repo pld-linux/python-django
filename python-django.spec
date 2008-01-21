@@ -3,13 +3,12 @@
 Summary:	The web framework for perfectionists with deadlines
 Summary(pl):	Szkielet WWW dla perfekcjonistów z ograniczeniami czasowymi
 Name:		python-django
-Version:	0.90
-Release:	3
+Version:	0.96.1
+Release:	1
 License:	BSD
 Group:		Development/Languages/Python
-Source0:	http://media.djangoproject.com/releases/0.90/Django-%{version}.tar.gz
-# Source0-md5:	16e1a377e58c25e8b36df49fb7d9d122
-Patch0:		%{name}-autoreload.patch
+Source0:	http://media.djangoproject.com/releases/0.96/Django-%{version}.tar.gz
+# Source0-md5:	10aa32e58969c4efeb00ef42ba192b17
 URL:		http://www.djangoproject.com/
 %pyrequires_eq	python
 BuildRequires:	python-devel
@@ -28,8 +27,6 @@ wspieraj±cy szybkie tworzenie i czysty, pragmatyczny projekt.
 %prep
 %setup -q -n %{module}-%{version}
 
-%patch0 -p1
-
 %build
 python ./setup.py build
 
@@ -37,7 +34,6 @@ python ./setup.py build
 rm -rf $RPM_BUILD_ROOT
 
 python ./setup.py install \
-	--single-version-externally-managed \
 	--optimize 2 \
 	--root=$RPM_BUILD_ROOT
 
@@ -56,5 +52,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc docs/*.* README
 %attr(755,root,root) %{_bindir}/*
-%{py_sitescriptdir}/%{module}*
 %{py_sitescriptdir}/django
