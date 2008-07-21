@@ -1,18 +1,19 @@
 %define		module	Django
 
 Summary:	The web framework for perfectionists with deadlines
-Summary(pl):	Szkielet WWW dla perfekcjonistów z ograniczeniami czasowymi
+Summary(pl.UTF-8):	Szkielet WWW dla perfekcjonistÃ³w z ograniczeniami czasowymi
 Name:		python-django
-Version:	0.96.1
+Version:	0.96.2
 Release:	1
 License:	BSD
 Group:		Development/Languages/Python
 Source0:	http://media.djangoproject.com/releases/0.96/Django-%{version}.tar.gz
-# Source0-md5:	10aa32e58969c4efeb00ef42ba192b17
+# Source0-md5:	2e39a43b93b50c2ca90bcade26010878
 URL:		http://www.djangoproject.com/
-%pyrequires_eq	python
 BuildRequires:	python-devel
-BuildRequires:	unzip
+BuildRequires:	python-setuptools >= 0.6-0.c1
+BuildRequires:	rpm-pythonprov
+%pyrequires_eq	python
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -20,9 +21,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Django is a high-level Python Web framework that encourages rapid
 development and clean, pragmatic design.
 
-%description -l pl
-Django to wysokopoziomowy szkielet dla serwisów WWW w Pythonie
-wspieraj±cy szybkie tworzenie i czysty, pragmatyczny projekt.
+%description -l pl.UTF-8
+Django to wysokopoziomowy szkielet dla serwisÃ³w WWW w Pythonie
+wspierajÄ…cy szybkie tworzenie i czysty, pragmatyczny projekt.
 
 %prep
 %setup -q -n %{module}-%{version}
@@ -44,6 +45,8 @@ find $RPM_BUILD_ROOT -type f -exec sed -i -e "s#$RPM_BUILD_ROOT##g" "{}" ";"
 %py_ocomp $RPM_BUILD_ROOT%{py_sitescriptdir}
 %py_comp $RPM_BUILD_ROOT%{py_sitescriptdir}
 # %%py_postclean
+find $RPM_BUILD_ROOT%{py_sitescriptdir} -type f -name '*.py' -a -not -path '*_template*' -exec rm "{}" ";"
+find $RPM_BUILD_ROOT%{py_sitescriptdir} -type f -path '*_template*' -a -name '*.py[oc]' -exec rm "{}" ";"
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -52,4 +55,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc docs/*.* README
 %attr(755,root,root) %{_bindir}/*
+#%%{py_sitescriptdir}/%{module}*
 %{py_sitescriptdir}/django
