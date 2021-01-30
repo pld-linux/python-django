@@ -66,6 +66,7 @@ Group:		Libraries/Python
 Suggests:	python3-MySQLdb
 Suggests:	python3-devel-tools
 Suggests:	python3-psycopg2
+Conflicts:	python-django < 1.11.29
 
 %description -n python3-%{module}
 Django is a high-level Python Web framework that encourages rapid
@@ -142,15 +143,8 @@ ln -s django-admin-3 $RPM_BUILD_ROOT%{_bindir}/py3-django-admin
 %endif
 
 # setup "django-admin" global alias
-# this needs to be done after both Python versions are installed
-# otherwise file contents would be overwritten via symlink
-%if %{with python2}
-# default to python2 if built
-ln -sf py2-django-admin $RPM_BUILD_ROOT%{_bindir}/django-admin
-%else
 %if %{with python3}
 ln -sf py3-django-admin $RPM_BUILD_ROOT%{_bindir}/django-admin
-%endif
 %endif
 
 %if %{with doc}
@@ -188,9 +182,8 @@ rm -rf $RPM_BUILD_ROOT
 %files -f python2-django.lang
 %defattr(644,root,root,755)
 %doc AUTHORS LICENSE README.rst
-%attr(755,root,root) %{_bindir}/django-admin
-%attr(755,root,root) %{_bindir}/py2-django-admin
 %attr(755,root,root) %{_bindir}/django-admin-2
+%attr(755,root,root) %{_bindir}/py2-django-admin
 %dir %{py_sitescriptdir}/%{module}
 %{py_sitescriptdir}/%{module}/*.py[co]
 %{py_sitescriptdir}/%{module}/apps
@@ -305,11 +298,9 @@ rm -rf $RPM_BUILD_ROOT
 %files -n python3-%{module} -f python3-django.lang
 %defattr(644,root,root,755)
 %doc AUTHORS LICENSE README.rst
-%if %{without python2}
 %attr(755,root,root) %{_bindir}/django-admin
-%endif
-%attr(755,root,root) %{_bindir}/py3-django-admin
 %attr(755,root,root) %{_bindir}/django-admin-3
+%attr(755,root,root) %{_bindir}/py3-django-admin
 %dir %{py3_sitescriptdir}/%{module}
 %{py3_sitescriptdir}/%{module}/*.py
 %{py3_sitescriptdir}/%{module}/__pycache__
