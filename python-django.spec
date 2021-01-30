@@ -1,8 +1,9 @@
+# NOTE: for versions >= 2.0 (for python 3.5+) see python3-django.spec
 #
 # Conditional build:
 %bcond_without	doc	# Sphinx documentation
 %bcond_without	python2 # CPython 2.x module
-%bcond_without	python3 # CPython 3.x module
+%bcond_with	python3 # CPython 3.x module (built from python3-django.spec)
 %bcond_with	tests	# unit tests [failing: 1E, 1F as of 1.11.29]
 
 %define		module		django
@@ -10,8 +11,6 @@
 Summary:	The web framework for perfectionists with deadlines
 Summary(pl.UTF-8):	Szkielet WWW dla perfekcjonistów z ograniczeniami czasowymi
 Name:		python-%{module}
-# stay on LTS line
-# https://www.djangoproject.com/download/#supported-versions
 # keep 1.11.x here for python2 support
 Version:	1.11.29
 Release:	1
