@@ -13,7 +13,7 @@ Summary(pl.UTF-8):	Szkielet WWW dla perfekcjonistów z ograniczeniami czasowymi
 Name:		python-%{module}
 # keep 1.11.x here for python2 support
 Version:	1.11.29
-Release:	2
+Release:	3
 License:	BSD
 Group:		Libraries/Python
 Source0:	https://www.djangoproject.com/m/releases/1.11/Django-%{version}.tar.gz
