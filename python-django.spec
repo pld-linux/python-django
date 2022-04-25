@@ -42,7 +42,7 @@ BuildRequires:	python3-pytz
 %endif
 %endif
 %if %{with doc}
-BuildRequires:	sphinx-pdg >= 1.8
+BuildRequires:	sphinx-pdg-2 >= 1.8
 %endif
 Suggests:	python-MySQLdb
 Suggests:	python-PyGreSQL
@@ -115,7 +115,8 @@ PYTHONPATH=$(pwd)/build-3/lib \
 %endif
 
 %if %{with doc}
-%{__make} -C docs html
+%{__make} -C docs html \
+	SPHINXBUILD=sphinx-build-2
 %endif
 
 %install
@@ -143,7 +144,9 @@ ln -s django-admin-3 $RPM_BUILD_ROOT%{_bindir}/py3-django-admin
 
 # setup "django-admin" global alias
 %if %{with python3}
-ln -sf py3-django-admin $RPM_BUILD_ROOT%{_bindir}/django-admin
+ln -sf django-admin-3 $RPM_BUILD_ROOT%{_bindir}/django-admin
+%else
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/django-admin
 %endif
 
 %if %{with doc}
